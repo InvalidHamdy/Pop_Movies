@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Moviez Show</string>
+    <string name="get_started">Get Started</string>
+    <string name="slogan">Pop your boredom away!</string>
+    <string name="sign_up"><u>Sign Up</u></string>
+    <string name="forgot_password"><u>Forgot Password</u></string>
+    <string name="signwith_google">Sign Up with Google</string>
+    <string name="rand_bttn_txt">Find your night</string>
+    <string name="more"><u>more</u></string>
+    <string name="sign_in"><u>Sign In</u></string>
+</resources>

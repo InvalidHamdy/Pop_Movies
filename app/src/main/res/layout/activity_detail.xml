@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".DetailActivity">
+    <ImageView
+        android:id="@+id/poster_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/text_poster"/>
+    <View
+        android:id="@+id/poster_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:background="@drawable/gradient_iv_overlay"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingHorizontal="15dp"
+            android:paddingTop="30dp"
+            android:paddingBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include
+                android:id="@+id/banner_ly"
+                layout="@layout/banner"/>
+            <TextView
+                android:id="@+id/showTitle_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/banner_ly"
+                tools:text="Movie Title" />
+            <TextView
+                android:id="@+id/season_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/showTitle_tv"
+                tools:text="Season X" />
+            <TextView
+                android:id="@+id/release_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/season_tv"
+                app:layout_constraintTop_toBottomOf="@id/showTitle_tv"
+                android:layout_marginStart="10dp"
+                tools:text="12-30-2025" />
+            <RatingBar
+                android:id="@+id/rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/season_tv"
+                app:layout_constraintStart_toStartOf="@id/season_tv"
+                android:layout_marginTop="10dp"
+                android:numStars="5"
+                tools:rating="3.7"
+                android:progressTint="@color/red_bttn"
+                android:progressBackgroundTint="#777777"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/watch_bttn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/rating_bar"
+                app:layout_constraintEnd_toStartOf="@id/share_bttn"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/transparent"
+                app:strokeWidth="2dp"
+                app:strokeColor="@color/red_bttn"
+                android:text="Watch"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/share_bttn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/watch_bttn"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="10dp"
+                android:backgroundTint="@color/transparent"
+                app:strokeWidth="2dp"
+                app:strokeColor="@color/white"
+                android:text="Share"/>
+
+            <TextView
+                android:id="@+id/descMain_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/watch_bttn"
+                android:text="Description" />
+            <TextView
+                android:id="@+id/desc_tv"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:layout_constraintTop_toBottomOf="@id/descMain_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                android:maxLines="6"
+                android:scrollbars="vertical"
+                tools:text="@tools:sample/lorem/random"
+                android:textColor="@color/white"
+                android:textSize="12sp"/>
+            <TextView
+                android:id="@+id/trailer_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/desc_tv"
+                android:text="Trailer" />
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtube_player_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/trailer_tv"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <TextView
+                android:id="@+id/castMain_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/youtube_player_view"
+                android:text="Cast" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cast_rv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/castMain_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                tools:listitem="@layout/cast_list_item"/>
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</FrameLayout>

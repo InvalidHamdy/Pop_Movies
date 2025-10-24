@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "347406349721",
+    "project_id": "pop-movies-c1f1e",
+    "storage_bucket": "pop-movies-c1f1e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347406349721:android:2101ac0a22ccfd5873cf08",
+        "android_client_info": {
+          "package_name": "com.InvalidHamdy.moviezshow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347406349721-d8gf4o4kbuleevll98n0l83n9i4mptlq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.InvalidHamdy.moviezshow",
+            "certificate_hash": "135b2c4b4d0c652a66725f28780454f8abde73e0"
+          }
+        },
+        {
+          "client_id": "347406349721-u2vj7b0omtja6cvu92nor5gu3rk9c962.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7bcS8THPyDxEjKFVX7f4Mcb0-IQCkpZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347406349721-u2vj7b0omtja6cvu92nor5gu3rk9c962.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
