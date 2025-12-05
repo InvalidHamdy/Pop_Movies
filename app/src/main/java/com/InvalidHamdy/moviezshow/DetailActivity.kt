@@ -14,7 +14,8 @@ import retrofit2.Response
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private val apiKey = "093224ec3a7dea80578772862bb63ea8"
-
+    private var youTubePlayerRef: YouTubePlayer? = null
+    private var pendingVideoKey: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +56,7 @@ class DetailActivity : AppCompatActivity() {
         }
         if (mediaId != -1) {
             loadCredits(mediaType, mediaId)
+            loadVideos(mediaType, mediaId)
         } else {
             binding.castMainTv.isVisible = false
             binding.castRv.isVisible = false
@@ -62,8 +64,8 @@ class DetailActivity : AppCompatActivity() {
 
         binding.youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
-                val videoId = "aqz-KE-bpKQ"
-                youTubePlayer.cueVideo(videoId, 0f)
+                youTubePlayerRef = youTubePlayer
+                pendingVideoKey?.let { youTubePlayer.cueVideo(it, 0f) }
             }
         })
 
@@ -104,6 +106,78 @@ class DetailActivity : AppCompatActivity() {
                 Log.e("Credits", "Failure: ${t.message}")
                 binding.castMainTv.isVisible = false
                 binding.castRv.isVisible = false
+            }
+        })
+    }
+
+    private fun sanitizeYoutubeKey(raw: String): String {
+        val lower = raw.trim()
+        val vIndex = lower.indexOf("v=")
+        if (vIndex != -1) {
+            val after = lower.substring(vIndex + 2)
+            val amp = after.indexOf('&')
+            return if (amp != -1) after.substring(0, amp) else after
+        }
+        val slashIndex = lower.lastIndexOf('/')
+        if (slashIndex != -1 && slashIndex < lower.length - 1) {
+            val candidate = lower.substring(slashIndex + 1)
+            val q = candidate.indexOf('?')
+            return if (q != -1) candidate.substring(0, q) else candidate
+        }
+        return raw
+    }
+
+    private fun loadVideos(mediaType: String, id: Int) {
+        val call: Call<VideoResponse> = if (mediaType == "movie") {
+            RetrofitClient.instance.getMovieVideos(id, apiKey)
+        } else {
+            RetrofitClient.instance.getTvVideos(id, apiKey)
+        }
+
+        call.enqueue(object : Callback<VideoResponse> {
+            override fun onResponse(call: Call<VideoResponse>, response: Response<VideoResponse>) {
+                if (response.isSuccessful) {
+                    val videos = response.body()?.results ?: emptyList()
+
+                    Log.d("Videos", "TMDB returned ${videos.size} videos for id=$id: ${
+                        videos.map { "${it.site}/${it.type}/${it.key}" }
+                    }")
+
+                    // Only consider YouTube videos (embedded player expects YouTube ids)
+                    val trailer = videos.firstOrNull { it.site.equals("YouTube", true) && it.type.equals("Trailer", true) }
+                        ?: videos.firstOrNull { it.site.equals("YouTube", true) }
+
+                    if (trailer == null) {
+                        Log.d("Videos", "No YouTube videos returned, hiding watch button")
+                        pendingVideoKey = null
+                        binding.watchBttn.isVisible = false
+                        return
+                    }
+
+                    val rawKey = trailer.key ?: ""
+                    val key = sanitizeYoutubeKey(rawKey)
+                    Log.d("Videos", "Selected rawKey=$rawKey sanitized=$key site=${trailer.site} type=${trailer.type}")
+
+                    // basic validation: YouTube ids are typically 11 chars; if clearly wrong hide play
+                    if (key.isBlank() || key.length < 6) {
+                        Log.w("Videos", "Sanitized key looks invalid, hiding watch button")
+                        pendingVideoKey = null
+                        binding.watchBttn.isVisible = false
+                        return
+                    }
+
+                    pendingVideoKey = key
+                    youTubePlayerRef?.let { it.cueVideo(key, 0f) }
+                    binding.watchBttn.isVisible = true
+                } else {
+                    Log.e("Videos", "Error: ${response.errorBody()?.string()}")
+                    binding.watchBttn.isVisible = false
+                }
+            }
+
+            override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
+                Log.e("Videos", "Failure: ${t.message}")
+                binding.watchBttn.isVisible = false
             }
         })
     }

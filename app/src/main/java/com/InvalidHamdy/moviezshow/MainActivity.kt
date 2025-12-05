@@ -91,12 +91,10 @@ class MainActivity : AppCompatActivity() {
 
                     binding.genreRv.adapter = genreAdapter
 
-                    // if there is at least one genre, select first and load it
                     if (currentGenres.isNotEmpty()) {
                         genreAdapter?.selectPosition(0)
                         loadByGenre(mediaType, currentGenres[0].id)
                     } else {
-                        // empty
                         binding.GenreShowRv.adapter = PosterAdapter(emptyList())
                     }
                 } else {

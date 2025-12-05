@@ -55,4 +55,17 @@ interface ApiCallable {
         @Path("tv_id") tvId: Int,
         @Query("api_key") apiKey: String
     ): Call<CreditsResponse>
+    // videos (trailers) for movie
+    @GET("movie/{movie_id}/videos")
+    fun getMovieVideos(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Call<VideoResponse>
+
+    // videos (trailers) for tv
+    @GET("tv/{tv_id}/videos")
+    fun getTvVideos(
+        @Path("tv_id") tvId: Int,
+        @Query("api_key") apiKey: String
+    ): Call<VideoResponse>
 }

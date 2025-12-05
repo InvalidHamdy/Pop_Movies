@@ -36,6 +36,7 @@
         app:strokeWidth="2dp"
         app:strokeColor="@color/white"
         android:text="Year"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/genreFilter_bttn"
         android:layout_width="wrap_content"
@@ -48,14 +49,67 @@
         app:strokeWidth="2dp"
         app:strokeColor="@color/white"
         android:text="Genre"/>
-    <ScrollView
-        android:visibility="gone"
+    <TextView
+        android:id="@+id/movieFilter_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/genreFilter_bttn"
+        app:layout_constraintBottom_toBottomOf="@id/genreFilter_bttn"
+        app:layout_constraintStart_toEndOf="@id/genreFilter_bttn"
+        android:layout_marginStart="5dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="Movies"/>
+    <TextView
+        android:id="@+id/showsFilter_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/genreFilter_bttn"
+        app:layout_constraintBottom_toBottomOf="@id/genreFilter_bttn"
+        app:layout_constraintStart_toEndOf="@id/movieFilter_tv"
+        android:layout_marginStart="5dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="Shows"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/genre_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/poster_card_list_item"/>
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ratingFilter_bttn"
+        tools:listitem="@layout/genre_card"
+        android:visibility="gone"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintTop_toBottomOf="@id/genre_rv"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/search_bg"
+        android:hint="Search"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:gravity="center_vertical"
+        android:textColorHint="#BFFFFFFF"
+        android:drawablePadding="12dp"
+        android:importantForAccessibility="yes"
+        android:inputType="text"
+        android:drawableStart="@drawable/search_ic"
+        android:backgroundTintMode="src_over"
+    />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/postersRV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/searchEditText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/poster_card_list_item"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
