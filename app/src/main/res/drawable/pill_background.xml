@@ -1,0 +1,16 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- لون الخلفية -->
+    <solid android:color="#FFFFFFFF" />
+
+    <!-- الحواف الدائرية -->
+    <corners android:radius="40dp"/>
+
+    <!-- الشادو -->
+    <padding android:left="4dp" android:top="4dp" android:right="4dp" android:bottom="4dp" />
+
+    <size android:height="48dp"/>
+
+
+</shape>
