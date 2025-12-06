@@ -1,9 +1,14 @@
-package com.InvalidHamdy.moviezshow
+package com.InvalidHamdy.moviezshow.data
+
+import com.InvalidHamdy.moviezshow.data.response.CreditsResponse
+import com.InvalidHamdy.moviezshow.data.response.GenreResponse
+import com.InvalidHamdy.moviezshow.data.response.MediaResponse
+import com.InvalidHamdy.moviezshow.data.response.VideoResponse
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+
 interface ApiCallable {
 
     // movie genres

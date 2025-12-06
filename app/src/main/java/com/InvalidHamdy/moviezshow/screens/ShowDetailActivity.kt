@@ -1,10 +1,11 @@
-package com.InvalidHamdy.moviezshow
+package com.InvalidHamdy.moviezshow.screens
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.InvalidHamdy.moviezshow.R
 
 class ShowDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

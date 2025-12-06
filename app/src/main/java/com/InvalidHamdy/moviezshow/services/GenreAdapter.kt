@@ -1,10 +1,12 @@
-package com.InvalidHamdy.moviezshow
+package com.InvalidHamdy.moviezshow.services
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.InvalidHamdy.moviezshow.R
 import com.InvalidHamdy.moviezshow.databinding.GenreCardBinding
+import com.InvalidHamdy.moviezshow.data.response.Genre
 
 class GenreAdapter(
     private val genres: List<Genre>,

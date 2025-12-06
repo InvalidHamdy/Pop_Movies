@@ -12,34 +12,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoviezShow">
         <activity
-            android:name=".ProfileActivity"
+            android:name=".screens.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".DetailActivity"
+            android:name=".screens.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ResetPasswordActivity"
+            android:name=".screens.ResetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".FavActivity"
+            android:name=".screens.FavActivity"
             android:exported="false" />
         <activity
-            android:name=".RandActivity"
+            android:name=".screens.RandActivity"
             android:exported="false" />
         <activity
-            android:name=".AllShowsActivity"
+            android:name=".screens.AllShowsActivity"
             android:exported="false" />
         <activity
-            android:name=".ShowDetailActivity"
+            android:name=".screens.ShowDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".screens.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".LogInActivity"
+            android:name=".screens.LogInActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".screens.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -8,6 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.InvalidHamdy.moviezshow.databinding.ActivityMainBinding
+import com.InvalidHamdy.moviezshow.data.response.Genre
+import com.InvalidHamdy.moviezshow.data.response.GenreResponse
+import com.InvalidHamdy.moviezshow.data.response.MediaItem
+import com.InvalidHamdy.moviezshow.data.response.MediaResponse
+import com.InvalidHamdy.moviezshow.data.response.RetrofitClient
+import com.InvalidHamdy.moviezshow.screens.DetailActivity
+import com.InvalidHamdy.moviezshow.services.GenreAdapter
+import com.InvalidHamdy.moviezshow.services.PosterAdapter
 import com.bumptech.glide.Glide
 import retrofit2.Call
 import retrofit2.Callback
@@ -114,7 +122,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<MediaResponse>, response: Response<MediaResponse>) {
                     if (response.isSuccessful) {
                         val items = response.body()?.results ?: emptyList()
-                        topAdapter = PosterAdapter(items){mediaItem ->
+                        topAdapter = PosterAdapter(items) { mediaItem ->
                             openDetailFor(mediaItem, currentMediaType)
 
                         }
@@ -141,8 +149,7 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<MediaResponse>, response: Response<MediaResponse>) {
                 if (response.isSuccessful) {
                     val items = response.body()?.results ?: emptyList()
-                    genreShowAdapter = PosterAdapter(items){
-                        mediaItem ->
+                    genreShowAdapter = PosterAdapter(items) { mediaItem ->
                         openDetailFor(mediaItem, currentMediaType)
                     }
                     binding.GenreShowRv.adapter = genreShowAdapter

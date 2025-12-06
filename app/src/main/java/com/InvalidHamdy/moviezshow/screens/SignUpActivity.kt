@@ -1,4 +1,4 @@
-package com.InvalidHamdy.moviezshow
+package com.InvalidHamdy.moviezshow.screens
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,8 @@ import androidx.credentials.CredentialManagerCallback
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.GetCredentialException
+import com.InvalidHamdy.moviezshow.MainActivity
+import com.InvalidHamdy.moviezshow.R
 import com.InvalidHamdy.moviezshow.databinding.ActivitySignUpBinding
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential

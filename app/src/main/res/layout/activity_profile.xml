@@ -9,7 +9,7 @@
     android:paddingTop="30dp"
     android:paddingBottom="15dp"
     android:background="@color/black"
-    tools:context=".ProfileActivity"
+    tools:context=".screens.ProfileActivity"
     >
 
     <include

@@ -1,10 +1,10 @@
-package com.InvalidHamdy.moviezshow
+package com.InvalidHamdy.moviezshow.screens
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
+import com.InvalidHamdy.moviezshow.MainActivity
 import com.InvalidHamdy.moviezshow.databinding.ActivitySplashBinding
 import com.google.firebase.auth.FirebaseAuth
 

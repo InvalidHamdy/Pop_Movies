@@ -1,4 +1,4 @@
-    package com.InvalidHamdy.moviezshow
+package com.InvalidHamdy.moviezshow.data.response
 
     data class Genre(
         val id: Int,

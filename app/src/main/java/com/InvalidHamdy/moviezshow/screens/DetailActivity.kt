@@ -1,10 +1,15 @@
-package com.InvalidHamdy.moviezshow
+package com.InvalidHamdy.moviezshow.screens
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.InvalidHamdy.moviezshow.R
 import com.InvalidHamdy.moviezshow.databinding.ActivityDetailBinding
+import com.InvalidHamdy.moviezshow.data.response.CreditsResponse
+import com.InvalidHamdy.moviezshow.data.response.RetrofitClient
+import com.InvalidHamdy.moviezshow.data.response.VideoResponse
+import com.InvalidHamdy.moviezshow.services.CastAdapter
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener

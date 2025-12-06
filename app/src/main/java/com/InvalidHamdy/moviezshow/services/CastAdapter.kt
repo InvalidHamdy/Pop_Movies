@@ -1,10 +1,12 @@
-package com.InvalidHamdy.moviezshow
+package com.InvalidHamdy.moviezshow.services
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.InvalidHamdy.moviezshow.R
 import com.bumptech.glide.Glide
 import com.InvalidHamdy.moviezshow.databinding.CastListItemBinding
+import com.InvalidHamdy.moviezshow.data.response.CastMember
 
 class CastAdapter(private val items: List<CastMember>) :
     RecyclerView.Adapter<CastAdapter.CastVH>() {

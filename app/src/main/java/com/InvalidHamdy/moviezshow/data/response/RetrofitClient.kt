@@ -1,5 +1,6 @@
-package com.InvalidHamdy.moviezshow
+package com.InvalidHamdy.moviezshow.data.response
 
+import com.InvalidHamdy.moviezshow.data.ApiCallable
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {

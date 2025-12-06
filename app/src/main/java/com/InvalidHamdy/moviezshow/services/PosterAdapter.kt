@@ -1,10 +1,12 @@
-package com.InvalidHamdy.moviezshow
+package com.InvalidHamdy.moviezshow.services
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.InvalidHamdy.moviezshow.R
+import com.InvalidHamdy.moviezshow.data.response.MediaItem
 import com.bumptech.glide.Glide
 
 class PosterAdapter(

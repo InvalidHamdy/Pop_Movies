@@ -1,4 +1,4 @@
-package com.InvalidHamdy.moviezshow
+package com.InvalidHamdy.moviezshow.screens
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,8 +6,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.credentials.CredentialManager
+import androidx.credentials.CredentialManagerCallback
 import androidx.credentials.GetCredentialRequest
+import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.GetCredentialException
+import com.InvalidHamdy.moviezshow.MainActivity
+import com.InvalidHamdy.moviezshow.R
 import com.InvalidHamdy.moviezshow.databinding.ActivityLogInBinding
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -83,11 +87,11 @@ class LogInActivity : AppCompatActivity() {
             request,
             null,
             executor,
-            object : androidx.credentials.CredentialManagerCallback<
-                    androidx.credentials.GetCredentialResponse,
+            object : CredentialManagerCallback<
+                    GetCredentialResponse,
                     GetCredentialException
                     > {
-                override fun onResult(result: androidx.credentials.GetCredentialResponse) {
+                override fun onResult(result: GetCredentialResponse) {
                     handleGoogleSignIn(result)
                 }
 
@@ -97,7 +101,7 @@ class LogInActivity : AppCompatActivity() {
             }
         )
     }
-    private fun handleGoogleSignIn(result: androidx.credentials.GetCredentialResponse) {
+    private fun handleGoogleSignIn(result: GetCredentialResponse) {
         try {
             val credential = result.credential
             val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)

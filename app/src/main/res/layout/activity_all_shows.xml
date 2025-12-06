@@ -9,7 +9,7 @@
     android:paddingTop="30dp"
     android:paddingBottom="15dp"
     android:background="@drawable/text_poster"
-    tools:context=".AllShowsActivity">
+    tools:context=".screens.AllShowsActivity">
     <include
         android:id="@+id/banner_ly"
         layout="@layout/banner"/>
