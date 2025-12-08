@@ -28,9 +28,14 @@
             android:paddingBottom="15dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <include
+            <com.InvalidHamdy.moviezshow.components.BannerView
                 android:id="@+id/banner_ly"
-                layout="@layout/banner"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
             <TextView
                 android:id="@+id/showTitle_tv"
                 android:layout_width="match_parent"

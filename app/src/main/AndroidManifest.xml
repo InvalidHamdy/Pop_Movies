@@ -30,9 +30,6 @@
             android:name=".screens.AllShowsActivity"
             android:exported="false" />
         <activity
-            android:name=".screens.ShowDetailActivity"
-            android:exported="false" />
-        <activity
             android:name=".screens.SignUpActivity"
             android:exported="false" />
         <activity
