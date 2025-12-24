@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.credentials.CredentialManager
 import androidx.credentials.CredentialManagerCallback
 import androidx.credentials.GetCredentialRequest
@@ -112,7 +113,7 @@ class LogInActivity : AppCompatActivity() {
             .addCredentialOption(googleIdOption)
             .build()
 
-        val executor = Executors.newSingleThreadExecutor()
+        val executor = ContextCompat.getMainExecutor(this)
 
         credentialManager.getCredentialAsync(
             this,

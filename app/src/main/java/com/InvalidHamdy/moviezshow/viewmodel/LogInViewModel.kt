@@ -38,7 +38,7 @@ class LogInViewModel(
     }
 
     fun signInWithGoogle(idToken: String) {
-        _googleSignInState.value = GoogleSignInState.Loading
+        _googleSignInState.postValue(GoogleSignInState.Loading)
 
         viewModelScope.launch {
             val result = authRepository.signInWithGoogle(idToken)

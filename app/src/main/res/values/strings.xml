@@ -8,4 +8,7 @@
     <string name="rand_bttn_txt">Find your night</string>
     <string name="more"><u>more</u></string>
     <string name="sign_in"><u>Sign In</u></string>
+    <string name="guest">Geust user</string>
+    <string name="unknown">null</string>
+
 </resources>

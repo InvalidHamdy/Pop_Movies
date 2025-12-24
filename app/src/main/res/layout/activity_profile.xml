@@ -48,6 +48,7 @@
         app:layout_constraintTop_toTopOf="@id/username_tv"
         app:layout_constraintBottom_toBottomOf="@id/username_tv"
         android:layout_marginStart="10dp"
+        android:visibility="gone"
         android:src="@drawable/verified_badge_ic"/>
     <ImageView
         android:id="@+id/profile_ic_iv"
@@ -125,7 +126,7 @@
         android:textSize="20sp"
         android:textStyle="bold"/>
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/signUp_bttn"
+        android:id="@+id/logOut_bttn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
