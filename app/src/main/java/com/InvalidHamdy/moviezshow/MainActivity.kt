@@ -139,7 +139,23 @@ class MainActivity : AppCompatActivity() {
             setMediaButtonsState(isMovieSelected = false)
             viewModel.loadAllForMedia("tv")
         }
+        
+        binding.moreTopBttn.setOnClickListener {
+            openAllShows()
+        }
+        
+        binding.moreGenreBttn.setOnClickListener {
+            openAllShows()
+        }
     }
+
+    private fun openAllShows() {
+        val intent = Intent(this, com.InvalidHamdy.moviezshow.screens.AllShowsActivity::class.java).apply {
+            putExtra("media_type", viewModel.currentMediaType)
+        }
+        startActivity(intent)
+    }
+
 
     private fun setMediaButtonsState(isMovieSelected: Boolean) {
         if (isMovieSelected) {

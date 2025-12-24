@@ -73,4 +73,46 @@ interface ApiCallable {
         @Path("tv_id") tvId: Int,
         @Query("api_key") apiKey: String
     ): Call<VideoResponse>
+
+    // Search movies
+    @GET("search/movie")
+    fun searchMovies(
+        @Query("api_key") apiKey: String,
+        @Query("query") query: String,
+        @Query("page") page: Int = 1,
+        @Query("language") language: String = "en-US"
+    ): Call<MediaResponse>
+
+    // Search tv
+    @GET("search/tv")
+    fun searchTv(
+        @Query("api_key") apiKey: String,
+        @Query("query") query: String,
+        @Query("page") page: Int = 1,
+        @Query("language") language: String = "en-US"
+    ): Call<MediaResponse>
+
+    // Discover movies (for filters)
+    @GET("discover/movie")
+    fun discoverMovies(
+        @Query("api_key") apiKey: String,
+        @Query("with_genres") genreId: String? = null,
+        @Query("primary_release_year") year: String? = null,
+        @Query("vote_average.gte") rating: Float? = null,
+        @Query("page") page: Int = 1,
+        @Query("language") language: String = "en-US",
+        @Query("sort_by") sortBy: String = "popularity.desc"
+    ): Call<MediaResponse>
+
+    // Discover tv (for filters)
+    @GET("discover/tv")
+    fun discoverTv(
+        @Query("api_key") apiKey: String,
+        @Query("with_genres") genreId: String? = null,
+        @Query("first_air_date_year") year: String? = null,
+        @Query("vote_average.gte") rating: Float? = null,
+        @Query("page") page: Int = 1,
+        @Query("language") language: String = "en-US",
+        @Query("sort_by") sortBy: String = "popularity.desc"
+    ): Call<MediaResponse>
 }

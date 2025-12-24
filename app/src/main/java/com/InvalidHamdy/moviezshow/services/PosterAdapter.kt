@@ -10,9 +10,11 @@ import com.InvalidHamdy.moviezshow.data.response.MediaItem
 import com.bumptech.glide.Glide
 
 class PosterAdapter(
-    private val items: List<MediaItem>,
+    initialItems: List<MediaItem>,
     private val onPosterClick: ((MediaItem) -> Unit)? = null
 ) : RecyclerView.Adapter<PosterAdapter.PosterVH>() {
+
+    private val items: MutableList<MediaItem> = initialItems.toMutableList()
 
     inner class PosterVH(view: View) : RecyclerView.ViewHolder(view) {
         val posterIv: ImageView = view.findViewById(R.id.poster_iv)
@@ -42,5 +44,17 @@ class PosterAdapter(
         holder.posterIv.setOnClickListener {
             onPosterClick?.invoke(item)
         }
+    }
+
+    fun addItems(newItems: List<MediaItem>) {
+        val startPos = items.size
+        items.addAll(newItems)
+        notifyItemRangeInserted(startPos, newItems.size)
+    }
+    
+    fun updateItems(newItems: List<MediaItem>) {
+        items.clear()
+        items.addAll(newItems)
+        notifyDataSetChanged()
     }
 }
