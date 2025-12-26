@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import com.InvalidHamdy.moviezshow.MainActivity
 import com.InvalidHamdy.moviezshow.databinding.BannerBinding
+import com.InvalidHamdy.moviezshow.screens.FavActivity
 import com.InvalidHamdy.moviezshow.screens.ProfileActivity
 
 class BannerView @JvmOverloads constructor(
@@ -24,13 +25,15 @@ class BannerView @JvmOverloads constructor(
     }
 
     private fun setupClicks() {
-//        binding.favIv.setOnClickListener {
-//            val intent = Intent(context, MainActivity::class.java)
-//            context.startActivity(intent)
-//        }
+        binding.favIv.setOnClickListener {
+            val intent = Intent(context, FavActivity::class.java)
+            context.startActivity(intent)
+        }
 
         binding.savedIv.setOnClickListener {
             Toast.makeText(context, "Saved Clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, FavActivity::class.java)
+            context.startActivity(intent)
         }
 
         binding.accIv.setOnClickListener {
@@ -40,6 +43,8 @@ class BannerView @JvmOverloads constructor(
 
         binding.logoIv.setOnClickListener {
             Toast.makeText(context, "Logo Clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
         }
     }
 
