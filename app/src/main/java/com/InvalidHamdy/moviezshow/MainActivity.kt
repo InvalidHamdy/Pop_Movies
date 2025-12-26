@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
+        viewModel.init(applicationContext)
+
         setupRecyclerViews()
         setupObservers()
         setupClickListeners()
@@ -82,10 +84,24 @@ class MainActivity : AppCompatActivity() {
                 }
                 is TrendingState.Success -> {
                     Log.d("MainActivity", "Trending loaded: ${state.items.size}")
-                    topAdapter = PosterAdapter(state.items) { mediaItem ->
-                        openDetailFor(mediaItem, viewModel.currentMediaType)
-                    }
+                    topAdapter = PosterAdapter(
+                        state.items,
+                        onPosterClick = { mediaItem ->
+                            openDetailFor(mediaItem, viewModel.currentMediaType)
+                        },
+                        onFavClick = { item ->
+                            viewModel.toggleFavorite(item)
+                        },
+                        onSaveClick = { item ->
+                            showSaveListDialog(item)
+                        }
+                    )
                     binding.topShowRv.adapter = topAdapter
+                    
+                    // Apply current local state
+                    viewModel.localState.value?.let { (favIds, savedMap) ->
+                        topAdapter?.updateLocalState(favIds, savedMap)
+                    }
                 }
                 is TrendingState.Error -> {
                     Log.e("MainActivity", "Error loading trending: ${state.message}")
@@ -101,10 +117,24 @@ class MainActivity : AppCompatActivity() {
                 }
                 is GenreMediaState.Success -> {
                     Log.d("MainActivity", "Genre media loaded: ${state.items.size}")
-                    genreShowAdapter = PosterAdapter(state.items) { mediaItem ->
-                        openDetailFor(mediaItem, viewModel.currentMediaType)
-                    }
+                    genreShowAdapter = PosterAdapter(
+                        state.items,
+                        onPosterClick = { mediaItem ->
+                            openDetailFor(mediaItem, viewModel.currentMediaType)
+                        },
+                        onFavClick = { item ->
+                            viewModel.toggleFavorite(item)
+                        },
+                        onSaveClick = { item ->
+                            showSaveListDialog(item)
+                        }
+                    )
                     binding.GenreShowRv.adapter = genreShowAdapter
+                    
+                    // Apply current local state
+                    viewModel.localState.value?.let { (favIds, savedMap) ->
+                        genreShowAdapter?.updateLocalState(favIds, savedMap)
+                    }
                 }
                 is GenreMediaState.Error -> {
                     Log.e("MainActivity", "Error loading genre media: ${state.message}")
@@ -126,6 +156,12 @@ class MainActivity : AppCompatActivity() {
                     clearMainPoster()
                 }
             }
+        }
+
+        // Observe local state changes
+        viewModel.localState.observe(this) { (favIds, savedMap) ->
+            topAdapter?.updateLocalState(favIds, savedMap)
+            genreShowAdapter?.updateLocalState(favIds, savedMap)
         }
     }
 
@@ -223,5 +259,21 @@ class MainActivity : AppCompatActivity() {
             item.number_of_seasons?.let { putExtra("number_of_seasons", it) }
         }
         startActivity(intent)
+    }
+
+    private fun showSaveListDialog(item: MediaItem) {
+        val lists = arrayOf("Completed", "Dropped", "Watch Later", "Remove from List")
+        android.app.AlertDialog.Builder(this)
+            .setTitle("Add to List")
+            .setItems(lists) { _, which ->
+                val listName = when(which) {
+                    0 -> "completed"
+                    1 -> "dropped"
+                    2 -> "watch_later"
+                    else -> null
+                }
+                viewModel.updateSaveList(item, listName)
+            }
+            .show()
     }
 }

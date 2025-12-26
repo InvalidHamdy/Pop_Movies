@@ -11,13 +11,21 @@ import com.bumptech.glide.Glide
 
 class PosterAdapter(
     initialItems: List<MediaItem>,
-    private val onPosterClick: ((MediaItem) -> Unit)? = null
+    private val onPosterClick: ((MediaItem) -> Unit)? = null,
+    private val onFavClick: ((MediaItem) -> Unit)? = null,
+    private val onSaveClick: ((MediaItem) -> Unit)? = null
 ) : RecyclerView.Adapter<PosterAdapter.PosterVH>() {
 
     private val items: MutableList<MediaItem> = initialItems.toMutableList()
+    
+    // Track local state for icons
+    private var favIds: Set<Int> = emptySet()
+    private var savedMap: Map<Int, String> = emptyMap()
 
     inner class PosterVH(view: View) : RecyclerView.ViewHolder(view) {
         val posterIv: ImageView = view.findViewById(R.id.poster_iv)
+        val favIv: ImageView = view.findViewById(R.id.fav_iv)
+        val saveIv: ImageView = view.findViewById(R.id.save_iv)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PosterVH {
@@ -38,11 +46,26 @@ class PosterAdapter(
                 .centerCrop()
                 .into(holder.posterIv)
         } else {
-            holder.posterIv.setImageResource(R.drawable.placeholder) //placeholder
+            holder.posterIv.setImageResource(R.drawable.placeholder)
         }
 
-        holder.posterIv.setOnClickListener {
+        // Set icon states based on local data
+        holder.favIv.setImageResource(
+            if (favIds.contains(item.id)) R.drawable.filled_fav_ic else R.drawable.fav_ic
+        )
+        holder.saveIv.setImageResource(
+            if (savedMap.containsKey(item.id)) R.drawable.filled_saved_ic else R.drawable.saved_ic
+        )
+
+        // CRITICAL: Use itemView for base click, NOT posterIv
+        holder.itemView.setOnClickListener {
             onPosterClick?.invoke(item)
+        }
+        holder.favIv.setOnClickListener {
+            onFavClick?.invoke(item)
+        }
+        holder.saveIv.setOnClickListener {
+            onSaveClick?.invoke(item)
         }
     }
 
@@ -55,6 +78,12 @@ class PosterAdapter(
     fun updateItems(newItems: List<MediaItem>) {
         items.clear()
         items.addAll(newItems)
+        notifyDataSetChanged()
+    }
+    
+    fun updateLocalState(newFavIds: Set<Int>, newSavedMap: Map<Int, String>) {
+        favIds = newFavIds
+        savedMap = newSavedMap
         notifyDataSetChanged()
     }
 }

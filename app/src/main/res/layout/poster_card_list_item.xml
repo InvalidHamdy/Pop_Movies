@@ -5,24 +5,32 @@
     android:layout_margin="4dp"
     app:cardCornerRadius="16dp"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true">
     <ImageView
         android:id="@+id/poster_iv"
         android:layout_width="100dp"
         android:layout_height="160dp"
         android:src="@drawable/placeholder"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:clickable="false"
+        android:focusable="false"/>
     <ImageView
         android:id="@+id/fav_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:src="@drawable/fav_ic"/>
+        android:src="@drawable/fav_ic"
+        android:clickable="true"
+        android:focusable="true"/>
     <ImageView
         android:id="@+id/save_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/saved_ic"
         android:layout_margin="10dp"
-        android:layout_gravity="end"/>
+        android:layout_gravity="end"
+        android:clickable="true"
+        android:focusable="true"/>
 </androidx.cardview.widget.CardView>

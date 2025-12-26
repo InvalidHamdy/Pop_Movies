@@ -43,8 +43,9 @@ class AllShowsActivity : AppCompatActivity() {
             insets
         }
 
+
         val initialMediaType = intent.getStringExtra("media_type") ?: "tv"
-        viewModel.init(initialMediaType)
+        viewModel.init(applicationContext, initialMediaType)
         updateMediaTypeUI(initialMediaType)
 
         setupRecyclerViews()
@@ -86,19 +87,45 @@ class AllShowsActivity : AppCompatActivity() {
                     if (state.isAppend) {
                         posterAdapter?.addItems(state.items)
                     } else {
-                        // New List
-                        posterAdapter = PosterAdapter(state.items) { mediaItem ->
-                            val intent = android.content.Intent(this, DetailActivity::class.java).apply {
-                                putExtra("media_id", mediaItem.id)
-                                putExtra("media_type", viewModel.currentMediaType)
-                                putExtra("poster_path", mediaItem.poster_path ?: "")
-                                putExtra("title", mediaItem.title ?: mediaItem.name ?: "")
-                                putExtra("overview", mediaItem.overview ?: "")
-                                mediaItem.number_of_seasons?.let { putExtra("number_of_seasons", it) }
+                        // New List - create adapter with all click handlers
+                        posterAdapter = PosterAdapter(
+                            state.items,
+                            onPosterClick = { mediaItem ->
+                                val intent = android.content.Intent(this, DetailActivity::class.java).apply {
+                                    putExtra("media_id", mediaItem.id)
+                                    putExtra("media_type", viewModel.currentMediaType)
+                                    putExtra("poster_path", mediaItem.poster_path ?: "")
+                                    putExtra("title", mediaItem.title ?: mediaItem.name ?: "")
+                                    putExtra("overview", mediaItem.overview ?: "")
+                                    mediaItem.number_of_seasons?.let { putExtra("number_of_seasons", it) }
+                                }
+                                startActivity(intent)
+                            },
+                            onFavClick = { item ->
+                                viewModel.toggleFavorite(item)
+                            },
+                            onSaveClick = { item ->
+                                val lists = arrayOf("Completed", "Dropped", "Watch Later", "Remove from List")
+                                android.app.AlertDialog.Builder(this)
+                                    .setTitle("Add to List")
+                                    .setItems(lists) { _, which ->
+                                        val listName = when(which) {
+                                            0 -> "completed"
+                                            1 -> "dropped"
+                                            2 -> "watch_later"
+                                            else -> null
+                                        }
+                                        viewModel.updateSaveList(item, listName)
+                                    }
+                                    .show()
                             }
-                            startActivity(intent)
-                        }
+                        )
                         binding.postersRV.adapter = posterAdapter
+                        
+                        // Apply current local state to new adapter
+                        viewModel.localState.value?.let { (favIds, savedMap) ->
+                            posterAdapter?.updateLocalState(favIds, savedMap)
+                        }
                     }
                 }
                 is AllShowsState.Error -> {
@@ -119,6 +146,11 @@ class AllShowsActivity : AppCompatActivity() {
                      if(index != -1) genreAdapter?.selectPosition(index)
                 }
             }
+        }
+
+        // Observe local state changes (favorites and saved lists)
+        viewModel.localState.observe(this) { (favIds, savedMap) ->
+            posterAdapter?.updateLocalState(favIds, savedMap)
         }
     }
 

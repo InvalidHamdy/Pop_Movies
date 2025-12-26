@@ -1,15 +1,19 @@
 package com.InvalidHamdy.moviezshow.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.InvalidHamdy.moviezshow.data.local.AppDatabase
 import com.InvalidHamdy.moviezshow.data.repository.GenreMediaState
 import com.InvalidHamdy.moviezshow.data.repository.GenresState
+import com.InvalidHamdy.moviezshow.data.repository.LocalRepository
 import com.InvalidHamdy.moviezshow.data.repository.MediaRepository
 import com.InvalidHamdy.moviezshow.data.repository.TopMediaState
 import com.InvalidHamdy.moviezshow.data.repository.TrendingState
 import com.InvalidHamdy.moviezshow.data.response.Genre
+import com.InvalidHamdy.moviezshow.data.response.MediaItem
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -28,9 +32,21 @@ class MainViewModel(
     private val _topMediaState = MutableLiveData<TopMediaState>()
     val topMediaState: LiveData<TopMediaState> = _topMediaState
 
+    // Local database state
+    private val _localState = MutableLiveData<Pair<Set<Int>, Map<Int, String>>>()
+    val localState: LiveData<Pair<Set<Int>, Map<Int, String>>> = _localState
+
+    private var localRepository: LocalRepository? = null
+
     private var currentGenres: List<Genre> = emptyList()
     var currentMediaType: String = "tv"
         private set
+
+    fun init(context: Context) {
+        val db = AppDatabase.getDatabase(context)
+        localRepository = LocalRepository(db.mediaDao())
+        loadLocalData()
+    }
 
     fun loadAllForMedia(mediaType: String) {
         currentMediaType = mediaType
@@ -96,4 +112,38 @@ class MainViewModel(
     }
 
     fun getCurrentGenres(): List<Genre> = currentGenres
+
+    private fun loadLocalData() {
+        viewModelScope.launch {
+            val allMedia = localRepository?.getAllMedia() ?: emptyList()
+            val favIds = allMedia.filter { it.isFavorite }.map { it.id }.toSet()
+            val savedMap = allMedia.filter { it.saveList != null }.associate { it.id to it.saveList!! }
+            _localState.value = Pair(favIds, savedMap)
+        }
+    }
+
+    fun toggleFavorite(item: MediaItem) {
+        viewModelScope.launch {
+            localRepository?.toggleFavorite(
+                item.id,
+                item.title ?: item.name ?: "",
+                item.poster_path,
+                currentMediaType
+            )
+            loadLocalData()
+        }
+    }
+
+    fun updateSaveList(item: MediaItem, listName: String?) {
+        viewModelScope.launch {
+            localRepository?.updateSaveList(
+                item.id,
+                item.title ?: item.name ?: "",
+                item.poster_path,
+                currentMediaType,
+                listName
+            )
+            loadLocalData()
+        }
+    }
 }
